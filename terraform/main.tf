@@ -1,10 +1,6 @@
-terraform {
-  required_version = ">=1.3"
+module "vpc" {
+  source = "terraform-aws-modules/vpc/aws"
 
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~>5.0"
-    }
-  }
+  name = "eks-vpc"
+  cidr = "10.0.0.0/16"
 }
