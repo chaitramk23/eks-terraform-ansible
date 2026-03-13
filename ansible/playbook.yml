@@ -1,0 +1,7 @@
+---
+- name: Install EKS Cluster Dependencies
+  hosts: all
+  become: true
+
+  roles:
+    - eks_dependencies
