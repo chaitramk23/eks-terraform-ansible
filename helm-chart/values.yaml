@@ -1,7 +1,7 @@
 replicaCount: 2
 image:
-  repository: your-dockerhub-username/hellospring
+  repository: chaitramk23/demo-pink
   tag: latest
 service:
-  type: LoadBalancer
+  type: Nodeport
   port: 8081
