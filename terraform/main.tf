@@ -1,6 +1,3 @@
-module "vpc" {
-  source = "terraform-aws-modules/vpc/aws"
-
-  name = "eks-vpc"
-  cidr = "10.0.0.0/16"
+terraform {
+  required_version = ">= 1.5"
 }
