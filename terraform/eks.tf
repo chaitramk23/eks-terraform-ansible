@@ -10,8 +10,11 @@ module "eks" {
   subnet_ids = module.vpc.private_subnets
 
   enable_cluster_creator_admin_permissions = true
-
   cluster_endpoint_public_access = true
+
+  # ADD THESE TWO LINES
+  create_kms_key = false
+  create_cloudwatch_log_group = false
 
   eks_managed_node_groups = {
 
@@ -22,8 +25,7 @@ module "eks" {
       min_size     = 1
 
       instance_types = ["t3.medium"]
-
-      capacity_type = "ON_DEMAND"
+      capacity_type  = "ON_DEMAND"
 
       subnet_ids = module.vpc.private_subnets
 
