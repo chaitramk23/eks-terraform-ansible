@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hellospring
+  name: artisantek-app
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: hellospring
+      app: artisantek-app
   template:
     metadata:
       labels:
-        app: hellospring
+        app: artisantek-app
     spec:
       containers:
-      - name: hellospring
+      - name: artisantek-app
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         ports:
-        - containerPort: 8081
+        - containerPort: 5000
