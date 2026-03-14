@@ -12,8 +12,13 @@ module "eks" {
   enable_cluster_creator_admin_permissions = true
   cluster_endpoint_public_access = true
 
-  # ADD THESE TWO LINES
+  # Disable KMS creation
   create_kms_key = false
+
+  # Disable encryption config
+  cluster_encryption_config = []
+
+  # Skip log group creation
   create_cloudwatch_log_group = false
 
   eks_managed_node_groups = {
