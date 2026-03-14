@@ -1,9 +1,9 @@
 replicaCount: 2
 
 image:
-  repository: chaitramk23/demo-pink
-  tag: latest
+  repository: chaitramk23/artisantek-java  # <-- your DockerHub username/image
+  tag: jan2026                               # <-- the tag you pushed
 
 service:
-  type: NodePort
-  port: 8081
+  type: LoadBalancer
+  port: 5000
