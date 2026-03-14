@@ -1,7 +1,0 @@
-plugin: amazon.aws.aws_ec2
-regions:
-  - ap-south-1
-hostnames:
-  - private-ip-address
-filters:
-  instance-state-name: running
