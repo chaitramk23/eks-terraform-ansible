@@ -6,7 +6,7 @@ pipeline {
 
     stage('Clone Repo') {
       steps {
-        git 'https://github.com/your-repo/eks-devops-project.git'
+        git 'https://github.com/chaitramk23/eks-terraform-ansible.git' 
       }
     }
 
