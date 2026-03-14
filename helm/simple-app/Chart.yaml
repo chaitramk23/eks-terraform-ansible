@@ -1,5 +1,5 @@
 apiVersion: v2
-name: hellospring
-description: Simple Java Spring Boot app
+name: artisantek-app
+description: Simple Java app with Helm
 version: 0.1.0
 appVersion: "1.0"
