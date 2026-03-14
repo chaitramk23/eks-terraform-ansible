@@ -6,7 +6,7 @@ pipeline {
 
     stage('Clone Repo') {
       steps {
-        git 'https://github.com/chaitramk23/eks-terraform-ansible.git' 
+        git url: 'https://github.com/chaitramk23/eks-terraform-ansible.git', branch: 'main'
       }
     }
 
