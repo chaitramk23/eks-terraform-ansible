@@ -1,0 +1,9 @@
+replicaCount: 2
+
+image:
+  repository: chaitramk23/demo-pink
+  tag: latest
+
+service:
+  type: NodePort
+  port: 8081
