@@ -1,0 +1,10 @@
+packages:
+  - git
+  - docker
+  - unzip
+  - curl
+  - wget
+
+kubectl_version: "v1.29.0"
+helm_version: "v3.12.0"
+install_path: "/usr/local/bin"
