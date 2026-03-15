@@ -1,0 +1,34 @@
+- name: Update all packages
+  yum:
+    name: "*"
+    state: latest
+
+- name: Install essential packages
+  yum:
+    name: "{{ packages }}"
+    state: present
+
+- name: Ensure docker is started and enabled
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Download kubectl
+  get_url:
+    url: "https://dl.k8s.io/release/{{ kubectl_version }}/bin/linux/amd64/kubectl"
+    dest: "{{ install_path }}/kubectl"
+    mode: '0755'
+
+- name: Download Helm
+  get_url:
+    url: "https://get.helm.sh/helm-{{ helm_version }}-linux-amd64.tar.gz"
+    dest: "/tmp/helm.tar.gz"
+  register: helm_download
+
+- name: Extract Helm
+  unarchive:
+    src: /tmp/helm.tar.gz
+    dest: "{{ install_path }}"
+    remote_src: yes
+  when: helm_download is changed
