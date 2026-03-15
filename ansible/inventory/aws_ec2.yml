@@ -2,9 +2,8 @@ plugin: amazon.aws.aws_ec2
 regions:
   - ap-south-1
 filters:
-  instance-state-name: running
-hostnames:
-  - private-ip-address
+  "tag:eks:cluster-name": "devops-eks-cluster"
+  "instance-state-name": "running"
 compose:
-  ansible_user: ec2-user
-  ansible_ssh_private_key_file: /var/lib/jenkins/.ssh/id_rsa
+  ansible_user: ubuntu      # <-- for Ubuntu nodes
+  ansible_connection: amazon.aws.aws_ssm
