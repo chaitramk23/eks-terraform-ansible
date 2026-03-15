@@ -1,34 +1,71 @@
-- name: Update all packages
-  yum:
-    name: "*"
-    state: latest
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
 
-- name: Install essential packages
-  yum:
-    name: "{{ packages }}"
+- name: Install basic packages
+  apt:
+    name:
+      - git
+      - curl
+      - unzip
+      - wget
+      - python3
+      - python3-pip
+      - apt-transport-https
+      - ca-certificates
+      - software-properties-common
     state: present
 
-- name: Ensure docker is started and enabled
+- name: Install Docker
+  apt:
+    name: docker.io
+    state: present
+
+- name: Ensure Docker service is running
   service:
     name: docker
     state: started
     enabled: yes
 
-- name: Download kubectl
-  get_url:
-    url: "https://dl.k8s.io/release/{{ kubectl_version }}/bin/linux/amd64/kubectl"
-    dest: "{{ install_path }}/kubectl"
-    mode: '0755'
+- name: Install AWS CLI v2
+  shell: |
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
+    unzip /tmp/awscliv2.zip -d /tmp
+    sudo /tmp/aws/install
+  args:
+    creates: /usr/local/bin/aws
 
-- name: Download Helm
-  get_url:
-    url: "https://get.helm.sh/helm-{{ helm_version }}-linux-amd64.tar.gz"
-    dest: "/tmp/helm.tar.gz"
-  register: helm_download
+- name: Install kubectl
+  shell: |
+    curl -LO "https://dl.k8s.io/release/v1.29.0/bin/linux/amd64/kubectl"
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+  args:
+    creates: /usr/local/bin/kubectl
 
-- name: Extract Helm
-  unarchive:
-    src: /tmp/helm.tar.gz
-    dest: "{{ install_path }}"
-    remote_src: yes
-  when: helm_download is changed
+- name: Install helm
+  shell: |
+    curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+  args:
+    creates: /usr/local/bin/helm
+
+- name: Install eksctl
+  shell: |
+    curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+    install /tmp/eksctl /usr/local/bin/eksctl
+  args:
+    creates: /usr/local/bin/eksctl
+
+- name: Verify installations
+  shell: |
+    docker --version
+    kubectl version --client
+    helm version
+    eksctl version
+    aws --version
+  register: verify
+  ignore_errors: yes
+
+- debug:
+    var: verify.stdout_lines
+  
