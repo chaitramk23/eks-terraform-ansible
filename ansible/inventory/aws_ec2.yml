@@ -5,5 +5,5 @@ filters:
   "tag:eks:cluster-name": "devops-eks-cluster"
   "instance-state-name": "running"
 compose:
-  ansible_user: ubuntu      # <-- for Ubuntu nodes
+  ansible_user: ubuntu
   ansible_connection: amazon.aws.aws_ssm
